@@ -1,0 +1,14 @@
+format_version: v1.0
+configName: dsi_xlcdc_rgba8888_wsi_9x75_400x1280
+folderName: legato_qs_9x75_eb_ws_7_9inch
+frameworkPath: C:\Harmony3
+processor: SAM9X75
+projectName: legato_qs_9x75_eb_ws_7_9inch
+settings:
+  PackageFilter: ''
+  FORCE_OPTIMIZATION: 'false'
+  GENERATE_BACKUP: 'true'
+  TRUSTZONE: 'false'
+  CMSISPath: dev_packs\arm\CMSIS\5.8.0
+  MERGE_STRATEGY: USER_ALL
+  DFPPath: dev_packs\Microchip\SAM9X7_DFP\1.1.120\atdf\SAM9X75.atdf
