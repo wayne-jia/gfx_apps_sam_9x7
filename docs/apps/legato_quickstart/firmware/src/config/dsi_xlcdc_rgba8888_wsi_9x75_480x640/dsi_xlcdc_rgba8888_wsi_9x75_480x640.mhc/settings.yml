@@ -1,0 +1,14 @@
+configName: dsi_xlcdc_rgba8888_wsi_9x75_480x640
+folderName: legato_qs_9x75_eb_ws_2_8inch
+format_version: v1.0
+frameworkPath: C:\Harmony3
+processor: SAM9X75
+projectName: legato_qs_9x75_eb_ws_2_8inch
+settings:
+  PackageFilter: ''
+  FORCE_OPTIMIZATION: 'false'
+  GENERATE_BACKUP: 'true'
+  TRUSTZONE: 'false'
+  CMSISPath: dev_packs\arm\CMSIS\5.8.0
+  MERGE_STRATEGY: USER_ALL
+  DFPPath: SAM9X7_DFP\1.1.120

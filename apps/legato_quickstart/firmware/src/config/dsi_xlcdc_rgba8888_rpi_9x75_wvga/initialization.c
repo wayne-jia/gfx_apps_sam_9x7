@@ -271,9 +271,9 @@ void SYS_Initialize ( void* data )
 
     DSI_Initialize();
 
-    FLEXCOM10_TWI_Initialize();
-
     XLCDC_Initialize();
+
+    FLEXCOM10_TWI_Initialize();
 
 	RTT_Initialize();
 

@@ -41,6 +41,17 @@ The following applications are provided to demonstrate a subset of the capabilit
 | Category | Item | Description | Release Type |
 | --- | --- | ---- |---- |
 |  apps | [legato_quickstart](./apps/legato_quickstart/readme.md) | Legato Graphics Library Quickstart Example | ![app-beta](https://img.shields.io/badge/application-beta-orange?style=plastic) |
+|  apps | [legato_adventure](./apps/legato_adventure/readme.md) | Legato Graphics Interactive Animation Example | ![app-beta](https://img.shields.io/badge/application-beta-orange?style=plastic) |
+|  apps | [legato_washing_machine](./apps/legato_washing_machine/readme.md) | Legato Graphics Advanced Example | ![app-beta](https://img.shields.io/badge/application-beta-orange?style=plastic) |
+
+## Graphics application examples (LVGL)
+
+The following applications are provided to demonstrate the ability for the Harmony Graphics Suite to support LVGL graphics library.
+
+| Category | Item | Description | Release Type |
+| --- | --- | ---- |---- |
+|  apps | [lvgl_showcase](./apps/lvgl_showcase/readme.md) | LVGL library Music Player UI example | ![app-beta](https://img.shields.io/badge/application-beta-orange?style=plastic) |
+
 ____
 
 [![License](https://img.shields.io/badge/license-Harmony%20license-orange.svg)](https://github.com/Microchip-MPLAB-Harmony/gfx_apps_sam_9x7/blob/master/mplab_harmony_license.md)
