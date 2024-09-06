@@ -1,56 +1,52 @@
 ﻿---
-title: Harmony 3 Graphics SAM 9x7 Applications Package
+title: Microchip Graphics Suite Harmony SAM 9x7 Applications Package
 nav_order: 1
 ---
 
-# ![MPLAB® Harmony Graphics Suite](./images/mhgs.png) MPLAB® Harmony 3 Graphics Application Examples for SAM 9x7 Family
+# ![Microchip Graphics Suite](https://mchpgfx.github.io/legato.docs/docs/legato/images/mgs.svg) Microchip Graphics Suite Harmony Application Examples for for SAM 9x7 Family
 
-MPLAB® Harmony Graphics Suite  is an extension of the MPLAB® ecosystem for creating
+Microchip Graphics Suite Harmony is an extension of the MPLAB® ecosystem for creating
 embedded graphics firmware solutions for Microchip 32-bit SAM and PIC microcontroller
 and microprocessor devices.  Refer to the following links for more information.
  - [Microchip 32-bit MCUs](https://www.microchip.com/design-centers/32-bit)
  - [Microchip 32-bit MPUs](https://www.microchip.com/design-centers/32-bit-mpus)
  - [Microchip MPLAB® X IDE](https://www.microchip.com/mplab/mplab-x-ide)
  - [Microchip MPLAB® Harmony](https://www.microchip.com/mplab/mplab-harmony)
- - [Microchip MPLAB® Harmony Pages](https://microchip-mplab-harmony.github.io/)
- - [MPLAB® Discover](https://mplab-discover.microchip.com/v1/itemtype/com.microchip.ide.project?s0=Legato)
+ - [User Guide for Advanced Graphics Demonstrations](https://developerhelp.microchip.com/xwiki/bin/view/software-tools/mgs/dev-kits/sam9x75-ug/)
+ - [Browse SAM9x7 Demonstrations on MPLAB® Discover](https://mplab-discover.microchip.com/v2?dsl=Microchip+AND+Graphics+AND+Suite+AND+9x7)
 
-This repository contains the MPLAB® Harmony 3 Graphics application examples for SAM 9x7 Family. Graphics applications are standalone applications which demonstrate of some of the capabilities of MPLAB® Harmony Graphics Suite.  Refer to the following links for release notes, home page, training materials, framework and application help.
+This repository contains the graphics examples for SAM 9x7 Family for engineering display bring-up.
+
+For feature-rich, professional Microchip Graphics Suite demonstrations and demonstrations from third-party graphics libaries, refer to user guides on [Microchip Developer Help](https://developerhelp.microchip.com/xwiki/bin/view/software-tools/mgs/dev-kits/sam9x75-ug/) or browse on [MPLAB® Discover](https://mplab-discover.microchip.com/v2?dsl=Microchip+AND+Graphics+AND+Suite+AND+9x7).
+
+Refer to the following links for release notes, home page, training materials, framework and application help.
 For more information on the tools, libraries and basic development with the MPLAB® Harmony Graphics Suite, please see the gfx repo also on github.
  - [Release Notes](./release_notes.md)
  - [MPLAB® Harmony License](./mplab_harmony_license.md)
- - [MPLAB® Harmony 3 Graphics User Guides Wiki](https://github.com/mchpgfx/legato.docs/wiki)
- - [MPLAB® Harmony 3 Graphics API Help](https://mchpgfx.github.io/legato.docs/html/index.html)
- - [MPLAB® Harmony 3 Graphics Videos](https://www.youtube.com/playlist?list=PL9B4edd-p2ag5xsIIHhja-caKYY7AKPxe)
- - [MPLAB® Harmony 3 Graphics Suite Documentation](https://microchip-mplab-harmony.github.io/gfx/documentation.html)
+ - [User Guides on Microchip Graphics Suite Harmony](https://developerhelp.microchip.com/xwiki/bin/view/software-tools/mgs/mgs-harmony-guide/)
+ - [Information on Microchip Graphics Suite Development Kits](https://developerhelp.microchip.com/xwiki/bin/view/software-tools/mgs/dev-kits/)
+ - [Discover the Ease of Designing a GUI on a Round Display](https://youtu.be/2cZQuTGj9Ac?si=uu0rVdrviRSJPBaD)
 
 # Contents Summary
 
-| Folder     | Description                                  |
-|------------|----------------------------------------------|
-| apps       | Example Graphics applications |
-| docs       | Contains files supporting documentation |
+| Folder | Description                             |
+| ------ | --------------------------------------- |
+| apps   | Example Graphics applications           |
+| docs   | Contains files supporting documentation |
 
 
-Documentation is available for offline viewing.  It can be used only after cloning this repository onto a local machine. For online viewing, please use [github pages](https://microchip-mplab-harmony.github.io/gfx_apps_sam_9x7/) of this repository.
+Documentation specific for this repository is available for offline viewing.  It can be used only after cloning this repository onto a local machine.
 
-## Graphics application examples (Legato)
+## Graphics application examples
 
-The following applications are provided to demonstrate a subset of the capabilities of Harmony Graphics Suite.
+The following applications are provided to assist in engineering display bring-up.
 
-| Category | Item | Description | Release Type |
-| --- | --- | ---- |---- |
-|  apps | [legato_quickstart](./apps/legato_quickstart/readme.md) | Legato Graphics Library Quickstart Example | ![app-beta](https://img.shields.io/badge/application-beta-orange?style=plastic) |
-|  apps | [legato_adventure](./apps/legato_adventure/readme.md) | Legato Graphics Interactive Animation Example | ![app-beta](https://img.shields.io/badge/application-beta-orange?style=plastic) |
-|  apps | [legato_washing_machine](./apps/legato_washing_machine/readme.md) | Legato Graphics Advanced Example | ![app-beta](https://img.shields.io/badge/application-beta-orange?style=plastic) |
+**NOTE:** For feature-rich, professional Microchip Graphics Suite demonstrations and demonstrations from third-party graphics libaries, refer to user guides on [Microchip Developer Help](https://developerhelp.microchip.com/xwiki/bin/view/software-tools/mgs/dev-kits/sam9x75-ug/) or browse on [MPLAB® Discover](https://mplab-discover.microchip.com/v2?dsl=Microchip+AND+Graphics+AND+Suite+AND+9x7).
 
-## Graphics application examples (LVGL)
 
-The following applications are provided to demonstrate the ability for the Harmony Graphics Suite to support LVGL graphics library.
-
-| Category | Item | Description | Release Type |
-| --- | --- | ---- |---- |
-|  apps | [lvgl_showcase](./apps/lvgl_showcase/readme.md) | LVGL library Music Player UI example | ![app-beta](https://img.shields.io/badge/application-beta-orange?style=plastic) |
+| Category | Item                                                              | Description                                   | Release Type                                                                    |
+| -------- | ----------------------------------------------------------------- | --------------------------------------------- | ------------------------------------------------------------------------------- |
+| apps     | [blank_quickstart](./apps/blank_quickstart/readme.md)             | Blank Quickstart Example                      | ![app-beta](https://img.shields.io/badge/application-production-green?style=plastic) |
 
 ____
 

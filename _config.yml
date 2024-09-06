@@ -16,11 +16,11 @@
 # in the templates via {{ site.myvariable }}.
 
 name: Microchip Technology
-title: MPLAB® Harmony 3 Graphics Application Examples for SAM 9x7 Family
+title: Microchip Graphics Suite Harmony Application Examples for SAM 9x7 Family
 lang: en-US
 timezone: America/Phoenix
 
-description: Harmony 3 Graphics Application Examples for SAM 9x7 Family Package
+description: Microchip Graphics Suite Harmony Application Examples for SAM 9x7 Family Package
 url: "https://microchip-mplab-harmony.github.io"
 baseurl: "/gfx_apps_sam_9x7"
 remote_theme: "mchpgfx/just-the-docs@mchp-harmony"
@@ -66,16 +66,27 @@ search_tokenizer_separator: /[\s/]+/
 heading_anchors: true
 
 # Google Analytics Tracking (optional)
-ga_tracking: UA-2724382-16
+ga_tracking: G-2EJTKQBFVM
 
 exclude:
+  - "*.yml"
   - "*.xml"
+  - "*.csv"
+  - "*.mc3"
+  - "*.txt"
+  - "*.properties"
   - "*.py"
   - "*.ftl"
+  - "*.elf"
   - "*.c"
   - "*.h"
   - "*.IAR"
+  - "*.cmake"
+  - "*.inc"
+  - "*.inx"
+  - "*.lst"
   - "Gem*"
+  - "Makefile.*"
   - "*.S"
   - "*.ld"
   - "*.jar"
@@ -94,7 +105,7 @@ aux_links:
     - "https://support.microchip.com"
 
 # Set a path/url to a logo that will be displayed instead of the title
-logo: "/assets/images/vendor/mhgs_logo_transparent.png"
+logo: "/assets/images/vendor/mgs.png"
 
 # Footer content appears at the bottom of every page's main content
-footer_content: "<img src='https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_logo.png' /><br />Copyright &copy; 2023 Microchip Technology."
+footer_content: "<img src='https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_logo.png' /><br />Copyright &copy; 2024 Microchip Technology."

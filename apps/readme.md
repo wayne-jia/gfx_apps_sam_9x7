@@ -11,35 +11,18 @@ market:
 
 # Example Applications
 
-## Legato Library Examples 
+**NOTE:** The blank examples published in this repository are intended for engineering display bring-up only. 
 
-* [Legato Quickstart](./legato_quickstart/readme.md)
-
-This demonstration provides a touch-enabled starting point for the legato graphics library.
-
-![](./../images/legato_quickstart.png)
-
-* [Legato Adventure](./legato_adventure/readme.md)
-
-This demonstration presents a minimalistic game interface utilizing parallax scrolling effect and sprite animations.
-
-![](./../images/legato_adventure.png)
-
-* [Legato Washing Machine](./legato_washing_machine/readme.md)
-
-A washing machine UI with interactive controls is visulaized using legato graphics library in this demonstration. 
-
-![](./../images/legato_washing_machine.png)
-
-## LVGL Library Examples
-
-* [LVGL Showcase](./lvgl_showcase/readme.md)
-
-This application demonstrates a simple way to create a graphics application using the LVGL graphics library that directly uses the LCD controller driver.
-
-![](./../images/lvgl_showcase.png)
+For feature-rich, professional Microchip Graphics Suite demonstrations and demonstrations from third-party graphics libaries, refer to user guides on [Microchip Developer Help](https://developerhelp.microchip.com/xwiki/bin/view/software-tools/mgs/dev-kits/sam9x75-ug/) or browse on [MPLAB® Discover](https://mplab-discover.microchip.com/v2?dsl=Microchip+AND+Graphics+AND+Suite+AND+9x7).
 
 
+## Blank Examples 
 
+
+* [Blank Quickstart](./blank_quickstart/readme.md)
+
+This demonstration provides a touch-enabled test pattern to validate the graphics subsystem.
+
+![](./../images/sam_9x75_cu_blank_qs.jpg)
 
 
