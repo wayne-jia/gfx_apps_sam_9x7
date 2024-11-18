@@ -28,7 +28,7 @@
 // *****************************************************************************
 
 #include "app.h"
-#include "fonts/fonts.h"
+#include "peripheral/pio/plib_pio.h"
 #include "definitions.h"
 
 // *****************************************************************************
@@ -53,323 +53,103 @@
 */
 
 APP_DATA appData;
-uint32_t color_map[] =
-    {
-        0x00000000,
-        0x333333FF,
-        0xFF0000FF,
-        0xFF8000FF,
-        0x00FF00FF,
-        0x80FF00FF,
-        0x0000FFFF,
-        0x0180FFFF,
-        0xFF01FD84,
-        0xFFFF00FF,
-        0x01FEFDFF,
-        0x8200FDFF,
-        0xFD01FCFF,
-        0xFE017FFF,
-        0x030003FF,
-        0x060307FF,
-        0x080808FF,
-        0x090909FF,
-        0x0E0C0FFF,
-        0x100D10FF,
-        0x111111FF,
-        0x151515FF,
-        0x161616FF,
-        0x1A1A1AFF,
-        0x1B1B1BFF,
-        0x1F1F21FF,
-        0x060307FF,
-        0x0E0C0FFF,
-        0x1A1A1AFF,
-        0x343436FF,
-        0x4D4A4EFF,
-        0x686568FF,
-        0x7F7D80FF,
-        0x9A979BFF,
-        0xB4B1B4FF,
-        0xCDCBCEFF,
-        0xE7E4E7FF,
-        0xFFFFFFFF,
-};
-const size_t color_max = sizeof(color_map) / sizeof(color_map[0]) - 1;
+
+// *****************************************************************************
+// *****************************************************************************
+// Section: Application Callback Functions
+// *****************************************************************************
+// *****************************************************************************
+
+/* TODO:  Add any necessary callback functions.
+*/
+uint32_t __attribute__ ((section(".region_nocache"), aligned (32))) fbgpudemo[800 *480] = { 0 };
+
+void gpu_demo(void)
+{
+    //GPU fill color bar example
+    gfxPixelBuffer buf;
+    buf.pixel_count = 800 * 480;
+    buf.size.width = 800;
+    buf.size.height = 480;
+    buf.mode = GFX_COLOR_MODE_RGBA_8888;
+    buf.buffer_length = 800 * 480 * 4;
+    buf.flags = 0;
+    buf.pixels = (gfxBuffer)fbgpudemo;
+    buf.orientation = GFX_ORIENT_0;
+    memset(fbgpudemo, 0x00, sizeof(fbgpudemo));  //Set background to black color
+
+    XLCDC_SetLayerEnable(BASE_LAYER, false, true);
+    XLCDC_SetLayerAddress(BASE_LAYER, (uint32_t)fbgpudemo, false);
+    XLCDC_SetLayerOpts(BASE_LAYER, 255, true, false);
+    XLCDC_SetLayerWindowXYPos(BASE_LAYER, 0, 0, false);
+    XLCDC_SetLayerWindowXYSize(BASE_LAYER, 800, 480, false);
+    XLCDC_SetLayerEnable(BASE_LAYER, true, true);
+
+    gfxRect drawRect;
+    drawRect.x = 0;
+    drawRect.y = 0;
+    drawRect.width = 100;
+    drawRect.height = 480;
+    DRV_GFX2D_Fill(&buf, &drawRect, 0xFF000000); //RED
+    
+    drawRect.x = 100;
+    DRV_GFX2D_Fill(&buf, &drawRect, 0x00FF0000); //GREEN
+
+    drawRect.x = 200;
+    DRV_GFX2D_Fill(&buf, &drawRect, 0x0000FF00); //BLUE
+
+    drawRect.x = 300;
+    DRV_GFX2D_Fill(&buf, &drawRect, 0xFFFFFF00); //WHITE
+    
+    drawRect.x = 400;
+    DRV_GFX2D_Fill(&buf, &drawRect, 0xFFFF0000); //YELLOW
+
+    drawRect.x = 500;
+    DRV_GFX2D_Fill(&buf, &drawRect, 0xFF00FF00); //PINK
+
+
+    //GPU blit example
+    gfxPixelBuffer srcBuf;
+    srcBuf.pixel_count = 174 * 40;
+    srcBuf.size.width = 174;
+    srcBuf.size.height = 40;
+    srcBuf.mode = GFX_COLOR_MODE_RGBA_8888;
+    srcBuf.buffer_length = 174 * 40 * 4;
+    srcBuf.flags = 0;
+    srcBuf.pixels = (void*)Image0.buffer.pixels;
+    srcBuf.orientation = GFX_ORIENT_0;
+
+    gfxRect srcRect;
+    srcRect.x = 0;
+    srcRect.y = 0;
+    srcRect.width = 174;
+    srcRect.height = 40;
+
+    gfxRect destRect;
+    destRect.x = 620;
+    destRect.y = 80;
+    destRect.width = 174;
+    destRect.height = 40;
+
+    DRV_GFX2D_Blit(&srcBuf, &srcRect, &buf, &destRect);
+}
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Application Local Functions
 // *****************************************************************************
 // *****************************************************************************
 
-void draw_pixel(uint32_t x, uint32_t y, uint32_t color)
-{
-    if (x < appData.width && y < appData.height)
-    {
-        appData.buffer[y * appData.width + x] = color;
-    }
-}
 
-void draw_line(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2, uint32_t color)
-{
-    int dx = abs(x2 - x1), sx = x1 < x2 ? 1 : -1;
-    int dy = abs(y2 - y1), sy = y1 < y2 ? 1 : -1;
-    int err = dx - dy, e2;
+/* TODO:  Add any necessary local functions.
+*/
 
-    while (1)
-    {
-        draw_pixel(x1, y1, color);
-        if (x1 == x2 && y1 == y2)
-            break;
-        e2 = 2 * err;
-        if (e2 > -dy)
-        {
-            err -= dy;
-            x1 += sx;
-        }
-        if (e2 < dx)
-        {
-            err += dx;
-            y1 += sy;
-        }
-    }
-}
 
-void draw_circle(uint32_t x, uint32_t y, uint32_t r, uint32_t color, bool fill)
-{
-    int32_t d = 3 - (r << 1);
-    uint32_t cx = 0, cy = r;
-
-    while (cx <= cy)
-    {
-        if (fill)
-        {
-            draw_line(x - cx, y - cy, x + cx, y - cy, color);
-            draw_line(x - cx, y + cy, x + cx, y + cy, color);
-            draw_line(x - cy, y - cx, x + cy, y - cx, color);
-            draw_line(x - cy, y + cx, x + cy, y + cx, color);
-        }
-        else
-        {
-            draw_pixel(x + cx, y + cy, color);
-            draw_pixel(x + cx, y - cy, color);
-            draw_pixel(x - cx, y + cy, color);
-            draw_pixel(x - cx, y - cy, color);
-            draw_pixel(x + cy, y + cx, color);
-            draw_pixel(x + cy, y - cx, color);
-            draw_pixel(x - cy, y + cx, color);
-            draw_pixel(x - cy, y - cx, color);
-        }
-        if (d < 0)
-        {
-            d += (cx << 2) + 6;
-        }
-        else
-        {
-            d += ((cx - cy) << 2) + 10;
-            cy--;
-        }
-        cx++;
-    }
-}
-
-void draw_rect_fill(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2, uint32_t color)
-{
-    for (uint32_t y = y1; y <= y2; y++)
-    {
-        for (uint32_t x = x1; x <= x2; x++)
-        {
-            draw_pixel(x, y, color);
-        }
-    }
-}
-
-uint32_t draw_char(uint32_t x, uint32_t y, char ascii_char, font_size_alias_t font_size, uint32_t color)
-{
-    font_t font;
-    get_font(ascii_char, font_size, &font);
-    uint32_t bytes_per_row = font.data_len / font.height;
-
-    for (int i = 0; i < font.height; i++)
-    {
-        for (int j = 0; j < bytes_per_row; j++)
-        {
-            uint32_t line = font.data[i * bytes_per_row + j];
-            for (int k = 0; k < 8; k++)
-            {
-                if (line & (0x80 >> k))
-                {
-                    draw_pixel(x + j * 8 + k, y + i, color);
-                }
-            }
-        }
-    }
-    return font.width;
-}
-
-uint32_t draw_string(uint32_t x, uint32_t y, const char *str, font_size_alias_t font_size, uint32_t color)
-{
-    uint32_t nx = x;
-    while (*str)
-    {
-        nx += draw_char(nx, y, *str++, font_size, color) + 1;
-    }
-    return nx - x;
-}
-
-uint32_t get_gradient(uint32_t start_color, uint32_t end_color, uint32_t current_step, uint32_t total_steps)
-{
-    uint32_t result = 0;
-    for (int i = 0; i < 4; i++)
-    {
-        uint8_t start = (start_color >> (8 * i)) & 0xFF;
-        uint8_t end = (end_color >> (8 * i)) & 0xFF;
-        uint8_t grad = start + (end - start) * current_step / total_steps;
-        result |= (uint32_t)grad << (8 * i);
-    }
-    return result;
-}
-
-void draw_test_pattern(uint32_t width, uint32_t height)
-{
-    int x_div = (width < 800) ? 10 : 16;
-    int y_div = 9;
-    int str_width = draw_string(0, 0, "Blank Quickstart", FONT_BASE, 0);
-
-    // Draw grid lines
-    for (int i = 0; i <= x_div; i++)
-    {
-        int x = (width - 1) * i / x_div;
-        draw_line(x, 0, x, height - 1, color_map[1]);
-    }
-    for (int i = 0; i <= y_div; i++)
-    {
-        int y = (height - 1) * i / y_div;
-        draw_line(0, y, width - 1, y, color_map[1]);
-    }
-
-    // Draw center circle
-    draw_circle(width / 2 - 1, height / 2 - 1, height / 2, color_map[1], false);
-
-    // Draw corner circles
-    int r = (width - 1) / x_div;
-    for (int x = 1; x < x_div; x += x_div - 2)
-    {
-        for (int y = 1; y < y_div; y += y_div - 2)
-        {
-            int cx = (width - 1) * x / x_div;
-            int cy = (height - 1) * y / y_div;
-            draw_circle(cx, cy, r, color_map[1], false);
-            draw_circle(cx, cy, r / 3, color_map[color_max], true);
-        }
-    }
-
-    // Draw central rectangle and text
-    int x1 = (width - 1) / x_div;
-    int y1 = (height - 1) / y_div;
-    int x2 = (width - 1) * (x_div - 1) / x_div;
-    int y2 = (height - 1) * (y_div - 1) / y_div;
-    draw_rect_fill(x1 * 2 + 2, y1 * 2 + 1, x2 - x1 - 2, y2 - y1 - 1, 0);
-    x1 = ((x1 * 2 + 2) + x2 - x1 - 2) / 2;
-    draw_string(x1 - str_width / 2, y2 - y1 + y1 / 2.75f, "Blank Quickstart", FONT_BASE, color_map[color_max]);
-
-    // Draw color bars
-    char tmp[16];
-    for (int i = 2; i < x_div - 2; i++)
-    {
-        int cx = (width - 1) * i / x_div;
-        int y_offset = (height - 1) / y_div;
-
-        draw_rect_fill(cx + 2, y_offset * 2 + 2, cx + r - 1, y_offset * 3 - 2, color_map[i]);
-        draw_rect_fill(cx + 2, y_offset * 3 + 2, cx + r - 1, y_offset * 4 - 2, color_map[i + 12]);
-        draw_rect_fill(cx + 2, y_offset * 4 + 2, cx + r - 1, y_offset * 5 - 2, color_map[i + 24]);
-
-        snprintf(tmp, sizeof(tmp), "%d%%", i - 1);
-        draw_string(cx + 4, y_offset * 3 + 4, tmp, FONT_SM, color_map[color_max]);
-
-        if (i == 2)
-            snprintf(tmp, sizeof(tmp), "2%%");
-        else if (i == 3)
-            snprintf(tmp, sizeof(tmp), "5%%");
-        else
-            snprintf(tmp, sizeof(tmp), "%d%%", (i - 3) * 10);
-        draw_string(cx + 4, y_offset * 4 + 4, tmp, FONT_SM, (i < 7) ? 0xFFFFFFFF : 0);
-    }
-
-    // Draw gradient bars
-    x1 = (width - 1) * 2 / x_div + 2;
-    x2 = (width - 1) * (x_div - 2) / x_div - 2;
-    int mid = (x1 + x2) / 2;
-
-    for (int j = 0; j < 3; j++)
-    {
-        y1 = (height - 1) * (5 + j * 0.667) / y_div + 2;
-        y2 = (height - 1) * (5.667 + j * 0.667) / y_div - 2;
-
-        for (int i = x1; i <= mid; i++)
-        {
-            draw_line(i, y1, i, y2, get_gradient(color_map[0], color_map[2 + 2 * j], i - x1, (x2 - x1) / 2));
-        }
-        for (int i = mid + 1; i <= x2; i++)
-        {
-            draw_line(i, y1, i, y2, get_gradient(color_map[2 + 2 * j], color_map[color_max], i - mid, (x2 - x1) / 2));
-        }
-    }
-}
-
-void init_touch_map(uint32_t width, uint32_t height)
-{
-    int x_div = (width < 800) ? 10 : 16;
-    int y_div = 9;
-
-    appData.touch_map[0].x1 = 0;
-    appData.touch_map[0].y1 = 0;
-    appData.touch_map[0].x2 = (width - 1) * 2 / x_div;
-    appData.touch_map[0].y2 = (height - 1) * 2 / y_div;
-
-    appData.touch_map[1].x1 = 0;
-    appData.touch_map[1].y1 = (height - 1) * 7 / y_div;
-    appData.touch_map[1].x2 = (width - 1) * 2 / x_div;
-    appData.touch_map[1].y2 = height - 1;
-
-    appData.touch_map[2].x1 = (width - 1) * (x_div - 2) / x_div;
-    appData.touch_map[2].y1 = 0;
-    appData.touch_map[2].x2 = width - 1;
-    appData.touch_map[2].y2 = (height - 1) * 2 / y_div;
-
-    appData.touch_map[3].x1 = (width - 1) * (x_div - 2) / x_div;
-    appData.touch_map[3].y1 = (height - 1) * 7 / y_div;
-    appData.touch_map[3].x2 = width - 1;
-    appData.touch_map[3].y2 = height - 1;
-}
-
-void touchDownHandler(const SYS_INP_TouchStateEvent *const evt)
-{
-    for (int i = 0; i < 4; i++)
-    {
-        if (evt->x > appData.touch_map[i].x1 &&
-            evt->x < appData.touch_map[i].x2 &&
-            evt->y > appData.touch_map[i].y1 &&
-            evt->y < appData.touch_map[i].y2)
-        {
-            draw_circle((appData.touch_map[i].x1 + appData.touch_map[i].x2) / 2,
-                        (appData.touch_map[i].y1 + appData.touch_map[i].y2) / 2,
-                        (appData.touch_map[0].x1 + appData.touch_map[0].x2) / 6,
-                        color_map[4], true);
-        }
-    }
-    LED_GREEN_On();
-}
-
-void touchUpHandler(const SYS_INP_TouchStateEvent *const evt)
-{
-    LED_GREEN_Off();
-    LED_BLUE_Off();
-}
-
-void touchMoveHandler(const SYS_INP_TouchMoveEvent *const evt)
-{
-    LED_BLUE_On();
-}
+// *****************************************************************************
+// *****************************************************************************
+// Section: Application Initialization and State Machine Functions
+// *****************************************************************************
+// *****************************************************************************
 
 /*******************************************************************************
   Function:
@@ -379,12 +159,20 @@ void touchMoveHandler(const SYS_INP_TouchMoveEvent *const evt)
     See prototype in app.h.
  */
 
-void APP_Initialize(void)
+
+
+void APP_Initialize ( void )
 {
     /* Place the App state machine in its initial state. */
     appData.state = APP_STATE_INIT;
-    memset(&appData, 0, sizeof(appData));
+
+    
+    /* TODO: Initialize your application's state machine and other
+     * parameters.
+     */
 }
+
+
 
 /******************************************************************************
   Function:
@@ -394,69 +182,54 @@ void APP_Initialize(void)
     See prototype in app.h.
  */
 
-void APP_Tasks(void)
+void APP_Tasks ( void )
 {
+
     /* Check the application's current state. */
-    switch (appData.state)
+    switch ( appData.state )
     {
-    /* Application's initial state. */
-    case APP_STATE_INIT:
-    {
-        SYS_INP_InputListener appInputListener;
-        gfxIOCTLArg_DisplaySize argDispSize;
-        gfxIOCTLArg_Value argVal;
-        bool appInitialized = true;
-
-        if (appInitialized)
+        /* Application's initial state. */
+        case APP_STATE_INIT:
         {
-            // Register the input event handlers
-            appInputListener.handleTouchDown = &touchDownHandler;
-            appInputListener.handleTouchUp = &touchUpHandler;
-            appInputListener.handleTouchMove = &touchMoveHandler;
-            SYS_INP_AddListener(&appInputListener);
+            bool appInitialized = true;
 
-            // Fetch display parameters
-            if ((DRV_XLCDC_IOCTL(GFX_IOCTL_GET_DISPLAY_SIZE, &argDispSize) == GFX_IOCTL_OK) &&
-                (DRV_XLCDC_IOCTL(GFX_IOCTL_GET_FRAMEBUFFER, &argVal) == GFX_IOCTL_OK))
+
+            if (appInitialized)
             {
-                appData.width = argDispSize.width;
-                appData.height = argDispSize.height;
-                appData.buffer = argVal.value.v_pbuffer->pixels;
+
                 appData.state = APP_STATE_SERVICE_TASKS;
             }
-            else
-            {
-                appData.state = APP_STATE_ERROR;
-            }
+            break;
         }
-        break;
-    }
 
-    case APP_STATE_SERVICE_TASKS:
-    {
-        draw_test_pattern(appData.width, appData.height);
-        init_touch_map(appData.width, appData.height);
+        case APP_STATE_SERVICE_TASKS:
+        {
+            // START OF CUSTOM CODE
+            static bool once = true;
+            
+            if(once)
+            {
+                /* Enable AC69T88A Display Backlight */
+                AC69T88A_BACKLIGHT_EN_Set();
+                gpu_demo();
+                once = false;
+            }
+            // END OF CUSTOM CODE
+            break;
+        }
 
-        appData.state = APP_STATE_IDLE;
-        break;
-    }
+        /* TODO: implement your application state machine.*/
 
-    case APP_STATE_IDLE:
-    {
-        break;
-    }
 
-    case APP_STATE_ERROR:
-    {
-        break;
-    }
-
-    default:
-    {
-        break;
-    }
+        /* The default state should never be executed. */
+        default:
+        {
+            /* TODO: Handle error in application's state machine. */
+            break;
+        }
     }
 }
+
 
 /*******************************************************************************
  End of File

@@ -34,160 +34,170 @@
 #include "configuration.h"
 
 // DOM-IGNORE-BEGIN
-#ifdef __cplusplus // Provide C++ Compatibility
+#ifdef __cplusplus  // Provide C++ Compatibility
 
-extern "C"
-{
+extern "C" {
 
 #endif
-  // DOM-IGNORE-END
+// DOM-IGNORE-END
 
-  // *****************************************************************************
-  // *****************************************************************************
-  // Section: Type Definitions
-  // *****************************************************************************
-  // *****************************************************************************
+// *****************************************************************************
+// *****************************************************************************
+// Section: Type Definitions
+// *****************************************************************************
+// *****************************************************************************
 
-  // *****************************************************************************
-  /* Application states
+#define BASE_LAYER   0
+#define OVR1_LAYER   1
+#define HEO_LAYER    2
+#define OVR2_LAYER   3
 
-    Summary:
-      Application states enumeration
+#define CANVAS_BASE  0
+#define CANVAS_OVR1  1
+#define CANVAS_HEO   2
+#define CANVAS_OVR2  3
 
-    Description:
-      This enumeration defines the valid application states.  These states
-      determine the behavior of the application at various times.
-  */
+#define CANVAS_HEO_X      0
+#define CANVAS_HEO_Y      380
+#define CANVAS_HEO_WIDTH  400
+#define CANVAS_HEO_HEIGHT 100
 
-  typedef enum
-  {
+#define CANVAS_OVR2_X      621
+#define CANVAS_OVR2_Y      126
+#define CANVAS_OVR2_WIDTH  176
+#define CANVAS_OVR2_HEIGHT 100
+// *****************************************************************************
+/* Application states
+
+  Summary:
+    Application states enumeration
+
+  Description:
+    This enumeration defines the valid application states.  These states
+    determine the behavior of the application at various times.
+*/
+
+typedef enum
+{
     /* Application's state machine's initial state. */
-    APP_STATE_INIT = 0,
+    APP_STATE_INIT=0,
     APP_STATE_SERVICE_TASKS,
-    APP_STATE_IDLE,
-    APP_STATE_ERROR,
     /* TODO: Define states used by the application state machine. */
 
-  } APP_STATES;
+} APP_STATES;
 
-  typedef struct
-  {
-    uint32_t x1;
-    uint32_t x2;
-    uint32_t y1;
-    uint32_t y2;
-  } touch_rect;
 
-  // *****************************************************************************
-  /* Application Data
+// *****************************************************************************
+/* Application Data
 
-    Summary:
-      Holds application data
+  Summary:
+    Holds application data
 
-    Description:
-      This structure holds the application's data.
+  Description:
+    This structure holds the application's data.
 
-    Remarks:
-      Application strings and buffers are be defined outside this structure.
-   */
+  Remarks:
+    Application strings and buffers are be defined outside this structure.
+ */
 
-  typedef struct
-  {
+typedef struct
+{
     /* The application's current state */
     APP_STATES state;
-    uint32_t width;
-    uint32_t height;
-    uint32_t *buffer;
-    touch_rect touch_map[4];
-  } APP_DATA;
 
-  // *****************************************************************************
-  // *****************************************************************************
-  // Section: Application Callback Routines
-  // *****************************************************************************
-  // *****************************************************************************
-  /* These routines are called by drivers when certain events occur.
-   */
+    /* TODO: Define any additional data used by the application. */
 
-  // *****************************************************************************
-  // *****************************************************************************
-  // Section: Application Initialization and State Machine Functions
-  // *****************************************************************************
-  // *****************************************************************************
+} APP_DATA;
 
-  /*******************************************************************************
-    Function:
-      void APP_Initialize ( void )
+// *****************************************************************************
+// *****************************************************************************
+// Section: Application Callback Routines
+// *****************************************************************************
+// *****************************************************************************
+/* These routines are called by drivers when certain events occur.
+*/
 
-    Summary:
-       MPLAB Harmony application initialization routine.
+// *****************************************************************************
+// *****************************************************************************
+// Section: Application Initialization and State Machine Functions
+// *****************************************************************************
+// *****************************************************************************
 
-    Description:
-      This function initializes the Harmony application.  It places the
-      application in its initial state and prepares it to run so that its
-      APP_Tasks function can be called.
+/*******************************************************************************
+  Function:
+    void APP_Initialize ( void )
 
-    Precondition:
-      All other system initialization routines should be called before calling
-      this routine (in "SYS_Initialize").
+  Summary:
+     MPLAB Harmony application initialization routine.
 
-    Parameters:
-      None.
+  Description:
+    This function initializes the Harmony application.  It places the
+    application in its initial state and prepares it to run so that its
+    APP_Tasks function can be called.
 
-    Returns:
-      None.
+  Precondition:
+    All other system initialization routines should be called before calling
+    this routine (in "SYS_Initialize").
 
-    Example:
-      <code>
-      APP_Initialize();
-      </code>
+  Parameters:
+    None.
 
-    Remarks:
-      This routine must be called from the SYS_Initialize function.
-  */
+  Returns:
+    None.
 
-  void APP_Initialize(void);
+  Example:
+    <code>
+    APP_Initialize();
+    </code>
 
-  /*******************************************************************************
-    Function:
-      void APP_Tasks ( void )
+  Remarks:
+    This routine must be called from the SYS_Initialize function.
+*/
 
-    Summary:
-      MPLAB Harmony Demo application tasks function
+void APP_Initialize ( void );
 
-    Description:
-      This routine is the Harmony Demo application's tasks function.  It
-      defines the application's state machine and core logic.
 
-    Precondition:
-      The system and application initialization ("SYS_Initialize") should be
-      called before calling this.
+/*******************************************************************************
+  Function:
+    void APP_Tasks ( void )
 
-    Parameters:
-      None.
+  Summary:
+    MPLAB Harmony Demo application tasks function
 
-    Returns:
-      None.
+  Description:
+    This routine is the Harmony Demo application's tasks function.  It
+    defines the application's state machine and core logic.
 
-    Example:
-      <code>
-      APP_Tasks();
-      </code>
+  Precondition:
+    The system and application initialization ("SYS_Initialize") should be
+    called before calling this.
 
-    Remarks:
-      This routine must be called from SYS_Tasks() routine.
-   */
+  Parameters:
+    None.
 
-  void APP_Tasks(void);
+  Returns:
+    None.
 
-// DOM-IGNORE-BEGIN
+  Example:
+    <code>
+    APP_Tasks();
+    </code>
+
+  Remarks:
+    This routine must be called from SYS_Tasks() routine.
+ */
+
+void APP_Tasks( void );
+
+//DOM-IGNORE-BEGIN
 #ifdef __cplusplus
 }
 #endif
-// DOM-IGNORE-END
+//DOM-IGNORE-END
 
 #endif /* _APP_H */
 
 /*******************************************************************************
  End of File
  */
+

@@ -1,0 +1,13 @@
+configName: lvdsc_xlcdc_rgba8888_mxt_9x75_curiosity_wvga
+folderName: legato_qs_9x75_curiosity_ac69t88a
+format_version: v1.0
+frameworkPath: C:\Harmony3
+processor: SAM9X75D2G
+projectName: legato_qs_9x75_curiosity_ac69t88a
+settings:
+  PackageFilter: ''
+  FORCE_OPTIMIZATION: 'false'
+  GENERATE_BACKUP: 'true'
+  TRUSTZONE: 'false'
+  MERGE_STRATEGY: USER_ALL
+  DFPPath: SAM9X7_DFP\1.3.149
